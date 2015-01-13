@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hello to anything rhyming with orange</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- <link rel="stylesheet" href="//koding.com/hello/css/style.css">
+<!--[if IE]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<script src='https://cdn.firebase.com/js/client/2.0.4/firebase.js'></script>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>    
+</head>
+
+<body>
+  <br><br>
+   <div id='messagesDiv'></div>
+   
+    <input type='text' id='nameInput' placeholder='Name'><br>
+    <input type='text' id='messageInput' placeholder='Message'><br>
+    
+    <input type='submit'>Does nothing<br>
+    
+    <script>
+      var myDataRef = new Firebase('https://daphwcokrn5.firebaseio-demo.com/');
+      $('#messageInput').keypress(function (e) {
+        if (e.keyCode == 13) {
+          var name = $('#nameInput').val();
+          var text = $('#messageInput').val();
+            myDataRef.push({name: name, text: text});
+          $('#messageInput').val('');
+        }
+      });
+      myDataRef.on('child_added', function(snapshot) {
+        var message = snapshot.val();
+displayChatMessage(message.name, message.text);
+      });
+      function displayChatMessage(name, text) {
+        $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+        $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+      };
+
+    </script>
+    
+    <ul>
+        <li>A</li>
+        <li>B</li>
+        <li>C</li>
+    </ul>
+    
+    <ol>
+        <li>X</li>
+        <li>Y</li>
+    </ol>
+</body>
